@@ -1,4 +1,6 @@
+import Three from '@components/three'
 import styled from '@emotion/styled'
+import { Canvas } from '@react-three/fiber'
 import { Dispatch, SetStateAction, useState } from 'react'
 
 const handleSpeech = (setText: Dispatch<SetStateAction<string>>) => {
@@ -44,14 +46,22 @@ const Speech = () => {
   const [text, setText] = useState('-')
 
   return (
-    <Container>
+    <div>
       <p>{text}</p>
       <button onClick={() => handleSpeech(setText)}>speak</button>
-    </Container>
+      <Canvas
+        gl={{ antialias: false }}
+        camera={{
+          fov: 45,
+          near: 0.1,
+          far: 1000,
+          position: [-60, 0, 0],
+        }}
+      >
+        <Three />
+      </Canvas>
+    </div>
   )
 }
 
-const Container = styled.div`
-  background-color: yellow;
-`
 export default Speech
