@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import { Vector3 } from 'three'
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader'
@@ -14,11 +14,16 @@ declare global {
   }
 }
 
-const Three = () => {
+const Three = ({ text = '-' }: { text: string }) => {
   extend({ TextGeometry })
   const font = new FontLoader().parse(NanumGothic)
-  const [text, setText] = useState<string>('입력된\n텍스트')
   const meshRef = useRef<THREE.Mesh>(null)
+  const textOption = {
+    font,
+    size: 22,
+    height: 10,
+    curveSegments: 3, // 글씨 깨짐 방지 설정
+  }
 
   useFrame((state) => {
     meshRef.current?.geometry.computeBoundingBox()
@@ -28,13 +33,13 @@ const Three = () => {
     meshRef.current!.geometry.translate(-center.x, -center.y, -center.z)
     const time = state.clock.getElapsedTime()
     meshRef.current!.rotation.x = 0
-    meshRef.current!.rotation.y = -1.3
-    meshRef.current!.rotation.z = 0.25 * Math.sin(time)
+    meshRef.current!.rotation.y = -1.5 + 0.2 * Math.sin(time)
+    meshRef.current!.rotation.z = 0.1 * Math.sin(time)
   })
 
   return (
     <mesh ref={meshRef}>
-      <textGeometry args={[text, { font, size: 15, height: 10 }]} />
+      <textGeometry args={[text, textOption]} />
       <meshMatcapMaterial attach="material" color="#e2ffa7" />
     </mesh>
   )

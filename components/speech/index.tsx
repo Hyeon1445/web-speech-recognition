@@ -18,47 +18,46 @@ const handleSpeech = (setText: Dispatch<SetStateAction<string>>) => {
   speechToText.onresult = (event: any) => {
     const text = event.results[0][0].transcript
     console.log(text)
-    setText(text)
+    setText(text.split(' ').join('\n'))
   }
-  speechToText.onspeechend = () => {
-    // speech end
-  }
-  speechToText.onnomatch = (event: any) => {
+  // speechToText.onspeechend = () => {
+  //   // speech end
+  // }
+  speechToText.onnomatch = () => {
     console.log('Sorry')
   }
   speechToText.onstart = () => {
-    // speech start
-    console.log('on start')
+    setText('Listening...')
   }
-  speechToText.onend = () => {
-    // speech end
-    console.log('on end')
-  }
-  speechToText.onerror = (event: any) => {
-    // error
+  // speechToText.onend = () => {
+  //   // speech end
+  //   console.log('on end')
+  // }
+  speechToText.onerror = () => {
     console.log('on error')
+    setText('...')
   }
-  console.log(speechToText)
   speechToText.start()
 }
 
 const Speech = () => {
-  const [text, setText] = useState('-')
+  const [text, setText] = useState('...')
 
   return (
     <div>
-      <p>{text}</p>
       <button onClick={() => handleSpeech(setText)}>speak</button>
       <Canvas
-        gl={{ antialias: false }}
         camera={{
           fov: 45,
           near: 0.1,
           far: 1000,
-          position: [-60, 0, 0],
+          position: [-500, 0, 0],
+        }}
+        style={{
+          height: '100vh',
         }}
       >
-        <Three />
+        <Three text={text} />
       </Canvas>
     </div>
   )
