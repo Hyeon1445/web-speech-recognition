@@ -1,4 +1,4 @@
-import Three from '@components/three'
+import RecognizedText from '@components/recognized-text'
 import styled from '@emotion/styled'
 import { Canvas } from '@react-three/fiber'
 import { Dispatch, SetStateAction, useState } from 'react'
@@ -40,7 +40,7 @@ const handleSpeech = (setText: Dispatch<SetStateAction<string>>) => {
   speechToText.start()
 }
 
-const Speech = () => {
+const SpeechRecognition = () => {
   const [text, setText] = useState('...')
 
   return (
@@ -55,12 +55,13 @@ const Speech = () => {
         }}
         style={{
           height: '100vh',
+          backgroundColor: '#000',
         }}
       >
-        <Three text={text} />
+        <RecognizedText text={text} />
       </Canvas>
     </div>
   )
 }
 
-export default Speech
+export default SpeechRecognition

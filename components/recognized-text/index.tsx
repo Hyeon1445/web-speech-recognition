@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-const Three = ({ text = '-' }: { text: string }) => {
+const RecognizedText = ({ text = '-' }: { text: string }) => {
   extend({ TextGeometry })
   const font = new FontLoader().parse(NanumGothic)
   const meshRef = useRef<THREE.Mesh>(null)
@@ -45,4 +45,4 @@ const Three = ({ text = '-' }: { text: string }) => {
   )
 }
 
-export default Three
+export default RecognizedText

@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
-import Speech from '@components/speech'
+import SpeechRecognition from '@components/speech-recognition'
 
 const Home: NextPage = () => {
-  return <Speech />
+  return <SpeechRecognition />
 }
 
 export default Home
